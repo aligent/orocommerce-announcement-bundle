@@ -1,0 +1,2 @@
+bundles:
+  - { name: Aligent\AnnouncementBundle\AligentAnnouncementBundle, priority: 250 }

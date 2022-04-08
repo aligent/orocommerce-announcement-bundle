@@ -1,0 +1,23 @@
+.alert-bar {
+  display: flex;
+  align-items: center;
+
+  .alert-bar__content {
+    padding: 1rem 0;
+    font-size: 1.1rem;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  .alert-bar__close {
+    right: 10px;
+    top: 10px;
+
+    .btn--link {
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+    }
+  }
+}

@@ -1,0 +1,5 @@
+styles:
+  inputs:
+    - 'bundles/aligentannouncement/scss/alert-bar.scss'
+
+  output: 'css/styles.css'

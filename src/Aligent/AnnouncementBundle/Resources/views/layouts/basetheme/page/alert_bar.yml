@@ -1,0 +1,25 @@
+layout:
+  actions:
+    - '@setBlockTheme':
+        themes: 'alert_bar.html.twig'
+
+    - '@add':
+        id: alert_bar
+        parentId: page_container
+        siblingId: page_header
+        blockType: container
+        prepend: true
+        options:
+          vars:
+            backgroundColor: '=data["alert_content_block"].getBackgroundColor()'
+            textColor: '=data["alert_content_block"].getContrastColor()'
+            displayStatus: '=data["alert_content_block"].getDisplayStatus()'
+
+    - '@add':
+        id: alert_message
+        parentId: alert_bar
+        blockType: content_block
+        options:
+          alias: '=data["alert_content_block"].getContentBlock()'
+          vars:
+            hideTitle: true

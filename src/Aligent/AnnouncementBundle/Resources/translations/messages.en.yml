@@ -1,0 +1,21 @@
+aligent:
+  announcement:
+    alert_block:
+      group:
+        title: 'Announcement message'
+
+      colour:
+        label: 'Block background colour'
+        hint: 'Announcement block background colour'
+
+      date_start:
+        label: 'Start date'
+        hint: 'Will be used as starting date to display announcement message'
+
+      date_end:
+        label: 'End date'
+        hint: 'Will be used as end date to stop displaying announcement message'
+
+      block_alias:
+        label: 'Content block'
+        hint: 'Above settings will be applied to the content block chosen'
