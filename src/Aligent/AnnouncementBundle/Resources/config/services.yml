@@ -1,27 +1,23 @@
-parameters:
-  # Form Type
-  alg_alert.form.content_block_select_type.class: Aligent\AnnouncementBundle\Form\Type\ContentBlockSelectType
-
 services:
-  # Form Types
-  Aligent\AnnouncementBundle\Form\Type\ContentBlockSelectType:
-    arguments:
-      - '@doctrine'
-    tags:
-      - { name: form.type, alias: alg_content_block_select }
+    # Form Types
+    Aligent\AnnouncementBundle\Form\Type\ContentBlockSelectType:
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: form.type, alias: alg_content_block_select }
 
-  Aligent\AnnouncementBundle\Form\Type\CustomerGroupMultiSelectType:
-    arguments:
-      - '@doctrine.orm.entity_manager'
-    tags:
-      - { name: form.type, alias: aligent_customer_group_multiselect }
+    Aligent\AnnouncementBundle\Form\Type\CustomerGroupMultiSelectType:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type, alias: aligent_customer_group_multiselect }
 
-  # Layout DataProviders
-  Aligent\AnnouncementBundle\Layout\DataProvider\AnnouncementDataProvider:
-    arguments:
-      - '@oro_config.manager'
-      - '@oro_website.manager'
-      - '@oro_locale.settings'
-      - '@oro_security.token_accessor'
-    tags:
-      - { name: layout.data_provider, alias: alert_content_block }
+    # Layout DataProviders
+    Aligent\AnnouncementBundle\Layout\DataProvider\AnnouncementDataProvider:
+        arguments:
+            - '@oro_config.manager'
+            - '@oro_website.manager'
+            - '@oro_locale.settings'
+            - '@oro_security.token_accessor'
+        tags:
+            - { name: layout.data_provider, alias: alert_content_block }

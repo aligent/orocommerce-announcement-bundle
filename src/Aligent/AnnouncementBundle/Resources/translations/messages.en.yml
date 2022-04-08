@@ -1,25 +1,25 @@
 aligent:
-  announcement:
-    alert_block:
-      group:
-        title: 'Announcement message'
+    announcement:
+        alert_block:
+            group:
+                title: 'Announcement Message'
 
-      colour:
-        label: 'Block background colour'
-        hint: 'Announcement block background colour'
+            colour:
+                label: 'Block background colour'
+                hint: 'Announcement block background colour'
 
-      date_start:
-        label: 'Start date'
-        hint: 'Will be used as starting date to display announcement message'
+            date_start:
+                label: 'Start date'
+                hint: 'Will be used as starting date to display announcement message'
 
-      date_end:
-        label: 'End date'
-        hint: 'Will be used as end date to stop displaying announcement message'
+            date_end:
+                label: 'End date'
+                hint: 'Will be used as end date to stop displaying announcement message'
 
-      block_alias:
-        label: 'Content block'
-        hint: 'Above settings will be applied to the content block chosen'
+            block_alias:
+                label: 'Content block'
+                hint: 'Above settings will be applied to the content block chosen'
 
-      allowed_customer_groups:
-        label: 'Allowed Customer Groups'
-        hint: 'Only chosen customer groups will be allowed to see the announcement'
+            allowed_customer_groups:
+                label: 'Allowed Customer Groups'
+                hint: 'Only chosen customer groups will be allowed to see the announcement'

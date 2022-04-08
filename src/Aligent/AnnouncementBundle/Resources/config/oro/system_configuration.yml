@@ -1,68 +1,71 @@
 system_configuration:
-  groups:
-    alert_additional_settings_segment:
-      title: 'aligent.announcement.alert_block.group.title'
+    groups:
+        aligent_announcement:
+            title: 'aligent.announcement.alert_block.group.title'
+            icon: 'fa-bullhorn'
+        alert_additional_settings_segment:
+            title: 'aligent.announcement.alert_block.group.title'
 
-  fields:
-    aligent_announcement.alert_block_background_colour:
-      data_type: string
-      type: 'Symfony\Component\Form\Extension\Core\Type\ColorType'
-      options:
-        label: 'aligent.announcement.alert_block.colour.label'
-        tooltip: 'aligent.announcement.alert_block.colour.hint'
-    aligent_announcement.alert_block_date_start:
-      data_type: string
-      type: 'Oro\Bundle\FormBundle\Form\Type\OroDateType'
-      options:
-        label: 'aligent.announcement.alert_block.date_start.label'
-        tooltip: 'aligent.announcement.alert_block.date_start.hint'
-    aligent_announcement.alert_block_date_end:
-      data_type: string
-      type: 'Oro\Bundle\FormBundle\Form\Type\OroDateType'
-      options:
-        label: 'aligent.announcement.alert_block.date_end.label'
-        tooltip: 'aligent.announcement.alert_block.date_end.hint'
-    aligent_announcement.alert_block_alias:
-      data_type: string
-      type: 'Aligent\AnnouncementBundle\Form\Type\ContentBlockSelectType'
-      options:
-        label: 'aligent.announcement.alert_block.block_alias.label'
-        tooltip: 'aligent.announcement.alert_block.block_alias.hint'
-    aligent_announcement.alert_block_allowed_customer_groups:
-      data_type: array
-      type: Aligent\AnnouncementBundle\Form\Type\CustomerGroupMultiSelectType
-      options:
-        label: 'aligent.announcement.alert_block.allowed_customer_groups.label'
-        tooltip: 'aligent.announcement.alert_block.allowed_customer_groups.hint'
+    fields:
+        aligent_announcement.alert_block_background_colour:
+            data_type: string
+            type: 'Symfony\Component\Form\Extension\Core\Type\ColorType'
+            options:
+                label: 'aligent.announcement.alert_block.colour.label'
+                tooltip: 'aligent.announcement.alert_block.colour.hint'
+        aligent_announcement.alert_block_date_start:
+            data_type: string
+            type: 'Oro\Bundle\FormBundle\Form\Type\OroDateType'
+            options:
+                label: 'aligent.announcement.alert_block.date_start.label'
+                tooltip: 'aligent.announcement.alert_block.date_start.hint'
+        aligent_announcement.alert_block_date_end:
+            data_type: string
+            type: 'Oro\Bundle\FormBundle\Form\Type\OroDateType'
+            options:
+                label: 'aligent.announcement.alert_block.date_end.label'
+                tooltip: 'aligent.announcement.alert_block.date_end.hint'
+        aligent_announcement.alert_block_alias:
+            data_type: string
+            type: 'Aligent\AnnouncementBundle\Form\Type\ContentBlockSelectType'
+            options:
+                label: 'aligent.announcement.alert_block.block_alias.label'
+                tooltip: 'aligent.announcement.alert_block.block_alias.hint'
+        aligent_announcement.alert_block_allowed_customer_groups:
+            data_type: array
+            type: Aligent\AnnouncementBundle\Form\Type\CustomerGroupMultiSelectType
+            options:
+                label: 'aligent.announcement.alert_block.allowed_customer_groups.label'
+                tooltip: 'aligent.announcement.alert_block.allowed_customer_groups.hint'
 
-  tree:
-    system_configuration:
-      commerce:
-        children:
-          marketing:
-            children:
-              alert_additional_settings_segment:
-                priority: 0
+    tree:
+        system_configuration:
+            commerce:
                 children:
-                  alert_additional_settings_segment:
-                    children:
-                      - aligent_announcement.alert_block_background_colour
-                      - aligent_announcement.alert_block_date_start
-                      - aligent_announcement.alert_block_date_end
-                      - aligent_announcement.alert_block_alias
-                      - aligent_announcement.alert_block_allowed_customer_groups
-    website_configuration:
-      commerce:
-        children:
-          marketing:
-            children:
-              alert_additional_settings_segment:
-                priority: 0
+                    marketing:
+                        children:
+                            aligent_announcement:
+                                priority: 0
+                                children:
+                                    alert_additional_settings_segment:
+                                        children:
+                                            - aligent_announcement.alert_block_background_colour
+                                            - aligent_announcement.alert_block_date_start
+                                            - aligent_announcement.alert_block_date_end
+                                            - aligent_announcement.alert_block_alias
+                                            - aligent_announcement.alert_block_allowed_customer_groups
+        website_configuration:
+            commerce:
                 children:
-                  alert_additional_settings_segment:
-                    children:
-                      - aligent_announcement.alert_block_background_colour
-                      - aligent_announcement.alert_block_date_start
-                      - aligent_announcement.alert_block_date_end
-                      - aligent_announcement.alert_block_alias
-                      - aligent_announcement.alert_block_allowed_customer_groups
+                    marketing:
+                        children:
+                            aligent_announcement:
+                                priority: 0
+                                children:
+                                    alert_additional_settings_segment:
+                                        children:
+                                            - aligent_announcement.alert_block_background_colour
+                                            - aligent_announcement.alert_block_date_start
+                                            - aligent_announcement.alert_block_date_end
+                                            - aligent_announcement.alert_block_alias
+                                            - aligent_announcement.alert_block_allowed_customer_groups
