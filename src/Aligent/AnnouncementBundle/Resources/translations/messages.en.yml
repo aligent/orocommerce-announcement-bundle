@@ -19,3 +19,7 @@ aligent:
       block_alias:
         label: 'Content block'
         hint: 'Above settings will be applied to the content block chosen'
+
+      allowed_customer_groups:
+        label: 'Allowed Customer Groups'
+        hint: 'Only chosen customer groups will be allowed to see the announcement'

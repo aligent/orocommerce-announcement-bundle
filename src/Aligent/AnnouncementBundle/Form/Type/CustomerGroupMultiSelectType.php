@@ -2,42 +2,38 @@
 /**
  * @category  Aligent
  * @package
- * @author    Greg Ziborov <greg.ziborov@aligent.com.au>
+ * @author    Jan Plank <jan.plank@aligent.com.au>
  * @copyright 2021 Aligent Consulting.
  * @license
  * @link      http://www.aligent.com.au/
  */
 
-
 namespace Aligent\AnnouncementBundle\Form\Type;
 
-use Doctrine\Persistence\ManagerRegistry;
-use Oro\Bundle\CMSBundle\Entity\ContentBlock;
-use Oro\Bundle\CMSBundle\Entity\Repository\ContentBlockRepository;
+use Doctrine\Persistence\ObjectManager;
+use Oro\Bundle\CustomerBundle\Entity\CustomerGroup;
+use Oro\Bundle\CustomerBundle\Entity\Repository\CustomerGroupRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Add form field with content blocks select list
- */
-class ContentBlockSelectType extends AbstractType
+class CustomerGroupMultiSelectType extends AbstractType
 {
-    const NAME = 'aligent_content_blocks_select';
+    const NAME = 'aligent_customer_group_multiselect';
 
-    protected ManagerRegistry $registry;
+    protected ObjectManager $manager;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ObjectManager $manager)
     {
-        $this->registry = $registry;
+        $this->manager = $manager;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-                'class' => ContentBlock::class,
-                'multiple' => false,
+                'class' => CustomerGroup::class,
+                'multiple' => true,
                 'required' => false,
             ]
         );
@@ -45,14 +41,15 @@ class ContentBlockSelectType extends AbstractType
         $resolver->setNormalizer(
             'choices',
             function (OptionsResolver $options) {
-                /** @var ContentBlockRepository $repo */
-                $repo = $this->registry->getRepository(ContentBlock::class);
+                /** @var CustomerGroupRepository $repo */
+                $repo = $this->manager->getRepository(CustomerGroup::class);
 
-                $contentBlocks = $repo->findAll();
+                $customerGroups = $repo->findAll();
                 $result = [];
-                foreach ($contentBlocks as $contentBlock) {
-                    $label = $contentBlock->getAlias();
-                    $result[$label] = $contentBlock->getAlias();
+                /** @var CustomerGroup $customerGroup */
+                foreach ($customerGroups as $customerGroup) {
+                    $label = $customerGroup->getName();
+                    $result[$label] = $customerGroup->getId();
                 }
                 return $result;
             }
