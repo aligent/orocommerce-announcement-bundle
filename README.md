@@ -17,7 +17,7 @@ This bundle adds the ability to display a custom Announcement Message on the Oro
 
 Requirements
 -------------------
-- OroCommerce 5.0
+- OroCommerce 4.2
 
 Installation and Usage
 -------------------

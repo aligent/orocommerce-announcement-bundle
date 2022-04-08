@@ -8,7 +8,7 @@
         "exclude-from-classmap": ["/Tests/"]
     },
     "require": {
-        "oro/commerce": "~5.0.0"
+        "oro/commerce": "~4.2.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
