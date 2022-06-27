@@ -1,4 +1,4 @@
-Aligent Announcement Bundle
+Aligent OroCommerce Announcement Bundle
 ==============================
 This bundle adds the ability to display a custom Announcement Message on the OroCommerce storefront.
 
