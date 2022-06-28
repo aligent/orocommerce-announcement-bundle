@@ -1,6 +1,7 @@
 {
     "name": "aligent/orocommerce-announcement-bundle",
     "description": "OroCommerce Bundle to display Announcement Messages on Storefront",
+    "license": "GPL-3.0",
     "autoload": {
         "psr-4": {
             "Aligent\\AnnouncementBundle\\": "./src/Aligent/AnnouncementBundle"
