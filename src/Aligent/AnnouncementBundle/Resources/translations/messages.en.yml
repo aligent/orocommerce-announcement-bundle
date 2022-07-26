@@ -10,11 +10,11 @@ aligent:
 
             date_start:
                 label: 'Start date'
-                hint: 'Will be used as starting date to display announcement message'
+                hint: 'Will be used as starting date to display announcement message (at midnight in system timezone)'
 
             date_end:
                 label: 'End date'
-                hint: 'Will be used as end date to stop displaying announcement message'
+                hint: 'Will be used as end date to stop displaying announcement message (after 23:59:59pm in system timezone)'
 
             block_alias:
                 label: 'Content block'
