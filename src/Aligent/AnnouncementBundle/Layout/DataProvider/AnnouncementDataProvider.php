@@ -7,17 +7,15 @@
  * @license
  * @link      http://www.aligent.com.au/
  */
-
 namespace Aligent\AnnouncementBundle\Layout\DataProvider;
 
 use Aligent\AnnouncementBundle\DependencyInjection\Configuration;
+use Carbon\Carbon;
+use DateTimeZone;
 use Oro\Bundle\ConfigBundle\Config\ConfigManager;
 use Oro\Bundle\CustomerBundle\Entity\CustomerUser;
 use Oro\Bundle\LocaleBundle\Model\LocaleSettings;
 use Oro\Bundle\SecurityBundle\Authentication\TokenAccessorInterface;
-use Oro\Bundle\WebsiteBundle\Manager\WebsiteManager;
-use Carbon\Carbon;
-use DateTimeZone;
 
 /**
  * Get alert block display configuration values
@@ -25,47 +23,29 @@ use DateTimeZone;
 class AnnouncementDataProvider
 {
     protected ConfigManager $configManager;
-    protected WebsiteManager $websiteManager;
     protected LocaleSettings $localeSettings;
     protected TokenAccessorInterface $tokenAccessor;
 
-    /**
-     * AnnouncementDataProvider constructor.
-     * @param ConfigManager $configManager
-     * @param WebsiteManager $websiteManager
-     * @param LocaleSettings $localeSettings
-     * @param TokenAccessorInterface $tokenAccessor
-     */
     public function __construct(
         ConfigManager          $configManager,
-        WebsiteManager         $websiteManager,
         LocaleSettings         $localeSettings,
         TokenAccessorInterface $tokenAccessor
     ) {
         $this->configManager = $configManager;
-        $this->websiteManager = $websiteManager;
         $this->localeSettings = $localeSettings;
         $this->tokenAccessor = $tokenAccessor;
     }
 
     /**
      * Get background colour for the alert block for the current website
-     * @return string|null
      */
     public function getBackgroundColor(): ?string
     {
-        $website = $this->websiteManager->getCurrentWebsite();
-        return $this->configManager->get(
-            Configuration::getConfigKeyByName(Configuration::ALERT_BLOCK_BACKGROUND_COLOUR),
-            false,
-            false,
-            $website
-        );
+        return $this->getConfiguration(Configuration::ALERT_BLOCK_BACKGROUND_COLOUR);
     }
 
     /**
      * Return black or white depending on background contrast
-     * @return string
      */
     public function getContrastColor(): string
     {
@@ -84,11 +64,16 @@ class AnnouncementDataProvider
 
     /**
      * Get display status for the alert block for the current website
-     * @return boolean
      */
     public function getDisplayStatus(): bool
     {
+        // Disable if no Content Block was configured
+        if (!$this->getContentBlock()) {
+            return false;
+        }
+
         $allowedGroups = $this->getAllowedCustomerGroupIdsFromConfig();
+
         // if there is no Customer Groups configured, we only check the Start and End dates
         if (!count($allowedGroups)) {
             return $this->checkAlertBlockDatesRange();
@@ -120,75 +105,75 @@ class AnnouncementDataProvider
     /**
      * Returns the date config value for the provided date config key
      * @param string $dateKey - Date config key
-     * @return string
+     * @return Carbon|null
      */
-    private function getAlertBlockDateConfig(string $dateKey): string
+    protected function getAlertBlockDateConfig(string $dateKey): ?Carbon
     {
         // get config parameters
-        $website = $this->websiteManager->getCurrentWebsite();
-        $dateField = $this->configManager->get(
-            Configuration::getConfigKeyByName($dateKey),
-            false,
-            false,
-            $website
-        );
-        return $dateField ? $dateField->format('d-m-Y') : '';
+        $dateField = $this->getConfiguration($dateKey);
+
+        if (!$dateField instanceof \DateTime) {
+            return null;
+        }
+
+        return $this->toSystemTimeZone(new Carbon($dateField));
+    }
+
+    protected function toSystemTimeZone(Carbon $carbon): Carbon
+    {
+        $timeZone = new DateTimeZone($this->localeSettings->getTimeZone());
+        return $carbon->tz($timeZone);
     }
 
     /**
      * Checks if the announcement should be displayed based on the configured Start and End Dates
      * @return bool
      */
-    private function checkAlertBlockDatesRange(): bool
+    protected function checkAlertBlockDatesRange(): bool
     {
-        $startDateFieldString = $this->getAlertBlockDateConfig(Configuration::ALERT_BLOCK_DATE_START);
-        $endDateFieldString = $this->getAlertBlockDateConfig(Configuration::ALERT_BLOCK_DATE_END);
+        $startDate = $this->getAlertBlockDateConfig(Configuration::ALERT_BLOCK_DATE_START);
+        if ($startDate) {
+            $startDate = $startDate->startOfDay();
+        }
+        $endDate = $this->getAlertBlockDateConfig(Configuration::ALERT_BLOCK_DATE_END);
+        if ($endDate) {
+            $endDate = $endDate->endOfDay();
+        }
 
-        // convert date to one time zone
-        $timeZone = new DateTimeZone($this->localeSettings->getTimeZone());
-        $today = Carbon::now()->tz($timeZone);
-        $startDate = new Carbon($startDateFieldString, $timeZone);
-        $endDate = (new Carbon($endDateFieldString, $timeZone))->endOfDay();
+        $today = $this->toSystemTimeZone(Carbon::now());
 
-        // compare dates and return display status
-        if (!$startDateFieldString && !$endDateFieldString) {
-            return true;
-        } elseif (!$endDateFieldString && ($startDate->lessThanOrEqualTo($today))) {
-            return true;
-        } elseif (!$startDateFieldString && ($endDate->greaterThanOrEqualTo($today))) {
-            return true;
-        } elseif (($endDate->greaterThanOrEqualTo($today)) && ($startDate->lessThanOrEqualTo($today))) {
-            return true;
-        } else {
+        if ($startDate && $startDate->greaterThanOrEqualTo($today)) {
+            // Starts in the future
             return false;
         }
+
+        if ($endDate && $endDate->lessThanOrEqualTo($today)) {
+            // Ended in the past
+            return false;
+        }
+
+        return true;
     }
 
     /**
      * Gets all customer group IDs configured in System->Configuration->Marketing->Announcement message
      * @return array<int,int>
      */
-    private function getAllowedCustomerGroupIdsFromConfig(): array
+    protected function getAllowedCustomerGroupIdsFromConfig(): array
     {
-        return (array)$this->configManager->get(
-            Configuration::getConfigKeyByName(Configuration::ALERT_BLOCK_ALLOWED_CUSTOMER_GROUPS)
-        );
+        return (array)$this->getConfiguration(Configuration::ALERT_BLOCK_ALLOWED_CUSTOMER_GROUPS);
     }
 
     /**
      * Get alert block alias for the current website
-     * @return string
      */
-    public function getContentBlock(): string
+    public function getContentBlock(): ?string
     {
-        $website = $this->websiteManager->getCurrentWebsite();
-        $contentBlock = $this->configManager->get(
-            Configuration::getConfigKeyByName(Configuration::ALERT_BLOCK_ALIAS),
-            false,
-            false,
-            $website
-        );
+        return $this->getConfiguration(Configuration::ALERT_BLOCK_ALIAS);
+    }
 
-        return $contentBlock ?: 'none';
+    public function getConfiguration(string $key): mixed
+    {
+        return $this->configManager->get(Configuration::getConfigKeyByName($key));
     }
 }

@@ -7,7 +7,6 @@
  * @license
  * @link      http://www.aligent.com.au/
  */
-
 namespace Aligent\AnnouncementBundle\DependencyInjection;
 
 use Oro\Bundle\ConfigBundle\Config\ConfigManager;

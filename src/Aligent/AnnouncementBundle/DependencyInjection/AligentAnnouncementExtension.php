@@ -7,22 +7,18 @@
  * @license
  * @link      http://www.aligent.com.au/
  */
-
-
 namespace Aligent\AnnouncementBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class AligentAnnouncementExtension extends Extension
 {
     const ALIAS = 'aligent_announcement';
 
     /**
-     * Loads a specific configuration.
-     *
      * @param array<int,mixed> $configs
      * @param ContainerBuilder $container
      * @throws \Exception
