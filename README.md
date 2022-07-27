@@ -24,9 +24,15 @@ Installation and Usage
 **NOTE: Adjust instructions as needed for your local environment**
 
 ### Installation
-*Currently, this Bundle is not available via Composer and must be installed manually into the application*
+Install via Composer
+```shell
+composer require aligent/orocommerce-announcement-bundle
+```
 
-Once installed, clear Oro cache to load bundle, then run a [full asset install](https://doc.oroinc.com/bundles/platform/AssetBundle/commands/#oro-assets-install) to ensure assets are recompiled.
+Once installed, run platform update to perform the installation:
+```shell
+php bin/console oro:platform:update --env=prod
+```
 
 
 ### Configuration Settings
@@ -58,7 +64,9 @@ Roadmap / Remaining Tasks
 -------------------
 - [x] Ability to restrict Announcement to one or more Customer Groups
 - [x] OroCommerce 5.0 Support
-- [ ] Implement Unit Tests
+- [x] Implement Unit Tests
+- [x] Refactor `AnnouncementDataProvider`
+- [ ] Consistent naming of `color` (deprecate `colour`)
 - [ ] Reset `hideAlert` session variable when new Announcements are added
 - [ ] Ability to block dismissal of Announcement Message (hides the 'X' button)
 - [ ] Ability to only display on Homepage

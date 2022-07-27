@@ -7,8 +7,6 @@
  * @license
  * @link      http://www.aligent.com.au/
  */
-
-
 namespace Aligent\AnnouncementBundle\Form\Type;
 
 use Doctrine\Persistence\ManagerRegistry;

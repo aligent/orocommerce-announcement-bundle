@@ -16,7 +16,6 @@ services:
     Aligent\AnnouncementBundle\Layout\DataProvider\AnnouncementDataProvider:
         arguments:
             - '@oro_config.manager'
-            - '@oro_website.manager'
             - '@oro_locale.settings'
             - '@oro_security.token_accessor'
         tags:
