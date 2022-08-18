@@ -23,3 +23,20 @@ aligent:
             allowed_customer_groups:
                 label: 'Allowed Customer Groups'
                 hint: 'Only chosen customer groups will be allowed to see the announcement'
+
+        aligentannouncement:
+            entity_label: 'Announcement'
+            entity_plural_label: 'Announcements'
+            id.label: 'ID'
+            organization.label: 'Organization'
+            name.label: 'Name'
+            enabled.label: 'Enabled'
+            priority:
+                label: 'Priority'
+                description: 'Lower priority Announcements display first (eg 0 first, followed by 1, 2, 3)'
+            schedules:
+                label: 'Schedules'
+            scopes:
+                label: 'Scopes'
+            content:
+                label: 'Announcement Content'
