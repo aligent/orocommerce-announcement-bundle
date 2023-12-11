@@ -18,7 +18,10 @@
     }
   },
   "config": {
-    "bin-dir": "bin"
+    "bin-dir": "bin",
+    "allow-plugins": {
+      "symfony/flex": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
