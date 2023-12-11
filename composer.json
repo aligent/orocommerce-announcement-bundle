@@ -20,7 +20,8 @@
   "config": {
     "bin-dir": "bin",
     "allow-plugins": {
-      "symfony/flex": true
+      "symfony/flex": true,
+      "symfony/runtime": true
     }
   },
   "minimum-stability": "dev",
