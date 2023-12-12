@@ -48,6 +48,7 @@ class ContentBlockSelectType extends AbstractType
 
                 $contentBlocks = $repo->findAll();
                 $result = [];
+                /** @var ContentBlock $contentBlock */
                 foreach ($contentBlocks as $contentBlock) {
                     $label = $contentBlock->getAlias();
                     $result[$label] = $contentBlock->getAlias();

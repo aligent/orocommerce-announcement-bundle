@@ -39,9 +39,10 @@ class AnnouncementDataProvider
     /**
      * Get background colour for the alert block for the current website
      */
-    public function getBackgroundColor(): ?string
+    public function getBackgroundColor(): string
     {
-        return $this->getConfiguration(Configuration::ALERT_BLOCK_BACKGROUND_COLOUR);
+        $color = $this->getConfiguration(Configuration::ALERT_BLOCK_BACKGROUND_COLOUR);
+        return is_string($color) ? $color : '';
     }
 
     /**
@@ -122,7 +123,11 @@ class AnnouncementDataProvider
     protected function toSystemTimeZone(Carbon $carbon): Carbon
     {
         $timeZone = new DateTimeZone($this->localeSettings->getTimeZone());
-        return $carbon->tz($timeZone);
+        $carbonTimezone = $carbon->tz($timeZone);
+        if (! $carbonTimezone instanceof Carbon) {
+            throw new \UnexpectedValueException('Expected return type of Carbon');
+        }
+        return $carbonTimezone;
     }
 
     /**
@@ -161,15 +166,20 @@ class AnnouncementDataProvider
      */
     protected function getAllowedCustomerGroupIdsFromConfig(): array
     {
-        return (array)$this->getConfiguration(Configuration::ALERT_BLOCK_ALLOWED_CUSTOMER_GROUPS);
+        $config = $this->getConfiguration(Configuration::ALERT_BLOCK_ALLOWED_CUSTOMER_GROUPS);
+        if (!is_array($config)) {
+            return [];
+        }
+        return $config;
     }
 
     /**
      * Get alert block alias for the current website
      */
-    public function getContentBlock(): ?string
+    public function getContentBlock(): string
     {
-        return $this->getConfiguration(Configuration::ALERT_BLOCK_ALIAS);
+        $contentBlock = $this->getConfiguration(Configuration::ALERT_BLOCK_ALIAS);
+        return is_string($contentBlock) ? $contentBlock : '';
     }
 
     public function getConfiguration(string $key): mixed

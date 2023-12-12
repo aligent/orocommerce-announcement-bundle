@@ -24,9 +24,9 @@ class AnnouncementDataProviderTest extends \PHPUnit\Framework\TestCase
 {
     use EntityTrait;
 
-    protected ConfigManager|MockObject $configManager;
-    protected LocaleSettings|MockObject $localeSettings;
-    protected TokenAccessorInterface|MockObject $tokenAccessor;
+    protected ConfigManager&MockObject $configManager;
+    protected LocaleSettings&MockObject $localeSettings;
+    protected TokenAccessorInterface&MockObject $tokenAccessor;
 
     public function setUp(): void
     {
